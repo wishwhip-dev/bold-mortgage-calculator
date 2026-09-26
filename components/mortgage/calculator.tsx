@@ -155,7 +155,8 @@ function defaultScenarioName(inputs: ScenarioInputs): string {
 
 type TextFieldProps = {
   id: string;
-  label: string;
+  label: React.ReactNode;
+  aside?: React.ReactNode;
   value: string;
   onValueChange: (value: string) => void;
   error?: string;
@@ -166,12 +167,15 @@ type TextFieldProps = {
 };
 
 /** A text input that shows money with a $ and comma grouping, or a plain percentage. */
-function TextField({ id, label, value, onValueChange, error, prefix, suffix, placeholder, hint }: TextFieldProps) {
+function TextField({ id, label, aside, value, onValueChange, error, prefix, suffix, placeholder, hint }: TextFieldProps) {
   const errorId = `${id}-error`;
   const hintId = `${id}-hint`;
   return (
     <div className="space-y-1.5">
-      <Label htmlFor={id}>{label}</Label>
+      <div className="flex items-center justify-between gap-2">
+        <Label htmlFor={id}>{label}</Label>
+        {aside}
+      </div>
       <div className="relative">
         {prefix && (
           <span aria-hidden className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
