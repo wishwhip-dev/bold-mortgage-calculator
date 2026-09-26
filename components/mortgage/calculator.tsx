@@ -410,6 +410,7 @@ export function MortgageCalculator() {
                   aside={<DownPaymentModeToggle mode={form.downPaymentMode} onModeChange={setDownPaymentMode} />}
                   value={form.downPayment}
                   onValueChange={(value) => update({ downPayment: value })}
+                  currency={form.downPaymentMode === "dollars"}
                   error={errors.downPayment}
                   placeholder={form.downPaymentMode === "dollars" ? "80,000" : "20"}
                   hint={
