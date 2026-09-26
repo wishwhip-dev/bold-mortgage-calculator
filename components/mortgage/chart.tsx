@@ -39,7 +39,7 @@ export function AmortizationChart({ schedule, monthlyPI, termYears }: Props) {
   );
   const baseY = y(0).toFixed(2);
   const principalArea = `M ${x(0).toFixed(2)},${baseY} L ${principalLine.join(" L ")} L ${x(count - 1).toFixed(2)},${baseY} Z`;
-  const interestArea = `M ${principalLine.join(" L ")} L ${topLine.reverse().join(" L ")} Z`;
+  const interestArea = `M ${principalLine.join(" L ")} L ${[...topLine].reverse().join(" L ")} Z`;
 
   const yTicks = [0, 0.25, 0.5, 0.75, 1].map((fraction) => fraction * max);
   const xTickYears = yearsFor(termYears);
