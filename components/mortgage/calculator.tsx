@@ -628,3 +628,105 @@ export function MortgageCalculator() {
   );
 }
 
+function SavedScenarios({
+  scenarios,
+  isLoading,
+  activeId,
+  onLoad,
+  onDelete,
+}: {
+  scenarios: Scenario[];
+  isLoading: boolean;
+  activeId: string | null;
+  onLoad: (scenario: Scenario) => void;
+  onDelete: (id: string) => void;
+}) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Saved scenarios</CardTitle>
+        <CardDescription>Click one to load its numbers back into the calculator.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        {isLoading ? (
+          <div className="space-y-2">
+            <Skeleton className="h-16 w-full" />
+            <Skeleton className="h-16 w-full" />
+          </div>
+        ) : scenarios.length === 0 ? (
+          <p className="text-sm text-muted-foreground">
+            Nothing saved yet — set up some numbers and press “Save scenario”.
+          </p>
+        ) : (
+          <ul className="space-y-2">
+            {scenarios.map((scenario) => {
+              const active = scenario.id === activeId;
+              const payment = computeAmortization(scenario).monthlyTotal;
+              return (
+                <li
+                  key={scenario.id}
+                  className={`flex items-stretch justify-between gap-2 rounded-xl border p-1 transition-shadow ${
+                    active ? "border-primary ring-2 ring-primary bg-accent/50" : ""
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => onLoad(scenario)}
+                    aria-current={active ? "true" : undefined}
+                    className="flex-1 rounded-lg px-3 py-2 text-left"
+                  >
+                    <span className="flex items-center gap-2 font-semibold">
+                      {scenario.name}
+                      {active && <span className="text-xs font-medium text-primary">viewing</span>}
+                    </span>
+                    <span className="mt-0.5 block text-sm text-muted-foreground tabular-nums">
+                      {formatCurrency(scenario.homePrice)} · {scenario.annualRatePct}% ·{" "}
+                      {scenario.termYears} yr · {formatCurrency(payment, true)}/mo
+                    </span>
+                  </button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="my-1 mr-1 text-destructive hover:text-destructive"
+                    onClick={() => onDelete(scenario.id)}
+                  >
+                    Delete
+                  </Button>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function Readout({ label, value, highlight = false }: { label: string; value: string; highlight?: boolean }) {
+  return (
+    <div className={`rounded-lg px-3 py-2 ${highlight ? "bg-primary text-primary-foreground" : "bg-muted/60"}`}>
+      <dt className="text-xs font-medium opacity-80">{label}</dt>
+      <dd className="text-base font-bold tabular-nums">{value}</dd>
+    </div>
+  );
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{label}</p>
+      <p className="mt-0.5 text-xl font-bold tabular-nums">{value}</p>
+    </div>
+  );
+}
+
+function EmptyNote({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-lg border border-dashed px-6 py-10 text-center">
+      <p className="font-semibold text-muted-foreground">{title}</p>
+      <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">{body}</p>
+    </div>
+  );
+}
+
