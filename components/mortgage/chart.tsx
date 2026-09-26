@@ -82,7 +82,7 @@ export function AmortizationChart({ schedule, monthlyPI, termYears }: Props) {
       <svg
         ref={svgRef}
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-        className="h-auto w-full touch-none select-none"
+        className="h-auto w-full select-none"
         role="img"
         tabIndex={0}
         aria-label={`Stacked area chart of monthly principal and interest over ${termYears} years. Use the arrow keys to read out a month.`}
