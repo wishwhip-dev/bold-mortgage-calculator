@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { database, type DownPaymentMode, type Scenario, type ScenarioInputs } from "@/lib/db";
-import { addScenario, deleteScenario, getWorkingState, saveWorkingState } from "@/lib/data/scenarios";
+import { addScenario, deleteScenario, getWorkingState, listScenarios, saveWorkingState } from "@/lib/data/scenarios";
 import { computeAmortization, type Amortization } from "@/lib/mortgage";
 import { useStoredQuery, useStorageStatus } from "@/lib/storage/react";
 import { AmortizationChart } from "./chart";
@@ -214,7 +214,7 @@ function TextField({ id, label, aside, value, onValueChange, error, prefix, suff
 }
 
 /** Money field: display value carries the $ and commas, stored value stays raw. */
-function MoneyField(props: Omit<TextFieldProps, "prefix" | "suffix" | "value" | "onValueChange"> & {
+function MoneyField(props: Omit<TextFieldProps, "prefix" | "value" | "onValueChange"> & {
   value: string;
   onValueChange: (value: string) => void;
 }) {
