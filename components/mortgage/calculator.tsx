@@ -474,7 +474,7 @@ export function MortgageCalculator() {
                   />
                 </fieldset>
                 <div className="flex flex-wrap gap-2">
-                  <Button type="button" variant="outline" onClick={() => setForm(DEFAULT_FORM)}>
+                  <Button type="button" variant="outline" onClick={() => update(DEFAULT_FORM)}>
                     Reset
                   </Button>
                   <Button type="button" onClick={() => setSaveOpen(true)} disabled={!valid}>
