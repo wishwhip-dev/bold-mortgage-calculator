@@ -1,0 +1,33 @@
+{
+  "manifestVersion": 1,
+  "template": "webapp-nextjs",
+  "capabilities": {
+    "auth": {
+      "kind": "none"
+    },
+    "backend": {
+      "kind": "server-runtime"
+    },
+    "instructions": {
+      "briefing": "AGENTS.md",
+      "docs": [
+        "docs/components.md",
+        "docs/storage.md"
+      ]
+    },
+    "storage": {
+      "kind": "browser-indexeddb",
+      "shared": false,
+      "crossDevice": false,
+      "exportImport": true,
+      "library": "dexie",
+      "packageVersion": "0.3.0",
+      "modules": [
+        "lib/storage",
+        "lib/db.ts",
+        "lib/data"
+      ],
+      "docs": "docs/storage.md"
+    }
+  }
+}
