@@ -73,11 +73,12 @@ export function AmortizationChart({ schedule, monthlyPI, termYears }: Props) {
   const tooltipX = hover === null ? 0 : x(hover);
 
   return (
-    <div className="relative">
+    <div>
       <div className="mb-2 flex items-center gap-4 text-sm">
         <LegendSwatch className="bg-chart-2" label="Principal" />
         <LegendSwatch className="bg-chart-1" label="Interest" />
       </div>
+      <div className="relative">
       <svg
         ref={svgRef}
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
