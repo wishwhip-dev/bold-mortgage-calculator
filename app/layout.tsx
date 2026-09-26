@@ -3,8 +3,9 @@ import "./globals.css";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
-  title: "New application",
-  description: "Created by the Assistant developer",
+  title: "Bold Mortgage Calculator",
+  description:
+    "A playful mortgage calculator: see your monthly payment, the principal-versus-interest story, and the year-by-year balance — all in your browser.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
