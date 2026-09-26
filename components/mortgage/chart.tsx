@@ -169,7 +169,7 @@ export function AmortizationChart({ schedule, monthlyPI, termYears }: Props) {
           className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full rounded-md border bg-popover px-3 py-2 text-xs shadow-md"
           style={{
             left: `${(tooltipX / WIDTH) * 100}%`,
-            top: `${((hover ? y(hovered.principal + hovered.interest) : 0) / HEIGHT) * 100}%`,
+            top: `${((hover === null ? 0 : y(hovered.principal + hovered.interest)) / HEIGHT) * 100}%`,
           }}
         >
           <p className="font-semibold">
