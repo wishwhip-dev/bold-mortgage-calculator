@@ -501,7 +501,7 @@ export function MortgageCalculator() {
                 <p className="text-sm font-semibold uppercase tracking-widest text-muted-foreground">
                   Estimated monthly payment
                 </p>
-                <p className="mt-1 text-5xl font-black tabular-nums tracking-tight sm:text-7xl">
+                <p className="mt-1 text-4xl font-black tabular-nums tracking-tight sm:text-5xl lg:text-7xl">
                   {formatCurrency(result.monthlyTotal, true)}
                 </p>
                 <p className="mt-2 text-sm text-muted-foreground">
