@@ -186,6 +186,7 @@ export function AmortizationChart({ schedule, monthlyPI, termYears }: Props) {
           </p>
         </div>
       )}
+      </div>
     </div>
   );
 }
