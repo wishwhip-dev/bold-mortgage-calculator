@@ -213,17 +213,25 @@ function TextField({ id, label, aside, value, onValueChange, error, prefix, suff
   );
 }
 
-/** Money field: display value carries the $ and commas, stored value stays raw. */
+/** Money field: display value carries the $ and commas, stored value stays raw. With
+ * `currency={false}` it is a plain number field (percent mode) with the same grouping. */
 function MoneyField(props: Omit<TextFieldProps, "prefix" | "value" | "onValueChange"> & {
   value: string;
   onValueChange: (value: string) => void;
+  currency?: boolean;
 }) {
-  const display = props.value === "" ? "" : `$${groupDigits(props.value)}`;
+  const { value, currency = true } = props;
+  const grouped = groupDigits(value);
+  const display = value.startsWith("-")
+    ? currency ? `-$${grouped.slice(1)}` : grouped
+    : currency
+      ? value === "" ? "" : `$${grouped}`
+      : grouped;
   return (
     <TextField
       {...props}
       value={display}
-      onValueChange={(next) => props.onValueChange(sanitizeMoney(next))}
+      onValueChange={(next) => props.onValueChange(currency ? sanitizeMoney(next) : sanitizePercent(next))}
     />
   );
 }
