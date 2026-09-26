@@ -131,16 +131,16 @@ function validate(form: FormState): { errors: FieldErrors; inputs: ScenarioInput
   };
 }
 
-function scenarioToForm(scenario: Scenario): FormState {
+function scenarioToForm(inputs: ScenarioInputs): FormState {
   return {
-    homePrice: sanitizeMoney(String(scenario.homePrice)),
-    downPayment: sanitizeMoney(String(scenario.downPayment)),
-    downPaymentMode: scenario.downPaymentMode,
-    rate: sanitizePercent(String(scenario.annualRatePct)),
-    termYears: scenario.termYears,
-    propertyTax: scenario.monthlyPropertyTax === 0 ? "" : sanitizeMoney(String(scenario.monthlyPropertyTax)),
-    insurance: scenario.monthlyInsurance === 0 ? "" : sanitizeMoney(String(scenario.monthlyInsurance)),
-    hoa: scenario.monthlyHoa === 0 ? "" : sanitizeMoney(String(scenario.monthlyHoa)),
+    homePrice: sanitizeMoney(String(inputs.homePrice)),
+    downPayment: sanitizeMoney(String(inputs.downPayment)),
+    downPaymentMode: inputs.downPaymentMode,
+    rate: sanitizePercent(String(inputs.annualRatePct)),
+    termYears: inputs.termYears,
+    propertyTax: inputs.monthlyPropertyTax === 0 ? "" : sanitizeMoney(String(inputs.monthlyPropertyTax)),
+    insurance: inputs.monthlyInsurance === 0 ? "" : sanitizeMoney(String(inputs.monthlyInsurance)),
+    hoa: inputs.monthlyHoa === 0 ? "" : sanitizeMoney(String(inputs.monthlyHoa)),
   };
 }
 
