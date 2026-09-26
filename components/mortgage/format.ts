@@ -17,25 +17,26 @@ export function groupDigits(raw: string): string {
   return decimalParts.length > 0 ? `${grouped}.${decimalParts.join("")}` : grouped;
 }
 
-/** Keeps only digits and at most one decimal point with two places — what a money field accepts. */
+/** Keeps digits and at most one decimal point (two places) — what a money field accepts. */
 export function sanitizeMoney(raw: string): string {
   const cleaned = raw.replace(/[^0-9.]/g, "");
-  const [intPart = "", ...rest] = cleaned.split(".");
-  const trimmedInt = intPart.replace(/^0+(?=\d)/, "").slice(0, 12);
-  const decimals = rest.join("").slice(0, 2);
-  if (cleaned.startsWith(".") || (intPart === "" && rest.length > 0)) {
-    return trimmedInt === "" && decimals !== "" ? `0.${decimals}` : decimals === "" ? "" : `0.${decimals}`;
-  }
-  return decimals !== "" ? `${trimmedInt}.${decimals}` : trimmedInt;
+  const dot = cleaned.indexOf(".");
+  const intPart = (dot === -1 ? cleaned : cleaned.slice(0, dot)).replace(/[^0-9]/g, "").replace(/^0+(?=\d)/, "").slice(0, 12);
+  const decimals = dot === -1 ? "" : cleaned.slice(dot + 1).replace(/[^0-9]/g, "").slice(0, 2);
+  const hasDot = dot !== -1;
+  if (intPart === "" && !hasDot) return "";
+  if (intPart === "") return hasDot ? `0.${decimals}` : "";
+  return hasDot ? `${intPart}.${decimals}` : intPart;
 }
 
-/** Keeps digits and one decimal point, several places — what a percentage field accepts. */
+/** Keeps digits and at most one decimal point (three places) — what a percentage field accepts. */
 export function sanitizePercent(raw: string): string {
   const cleaned = raw.replace(/[^0-9.]/g, "");
-  const [intPart = "", ...rest] = cleaned.split(".");
-  const trimmedInt = intPart.replace(/^0+(?=\d)/, "").slice(0, 4);
-  const decimals = rest.join("").slice(0, 3);
-  return rest.length > 0 ? `${trimmedInt}.${decimals}` : trimmedInt;
+  const dot = cleaned.indexOf(".");
+  const intPart = (dot === -1 ? cleaned : cleaned.slice(0, dot)).replace(/[^0-9]/g, "").replace(/^0+(?=\d)/, "").slice(0, 4);
+  const decimals = dot === -1 ? "" : cleaned.slice(dot + 1).replace(/[^0-9]/g, "").slice(0, 3);
+  if (intPart === "" && dot === -1) return "";
+  return dot === -1 ? intPart : `${intPart}.${decimals}`;
 }
 
 /** Parses a raw field value to a number, or undefined when the field is blank or not a number. */
